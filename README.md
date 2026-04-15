@@ -198,6 +198,6 @@ Base: `/api`
 
 ## Author
 
-**Rishabh Bhargava**
+**Kunal Baheti**
 
 Built as a portfolio project demonstrating full-stack SaaS architecture with real API integration.
