@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #0B0E14;
+  color: #E8ECF4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2A3348; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3A4560; }
+
+/* Table */
+table { border-spacing: 0; }
+
+/* Focus styles */
+input:focus, button:focus-visible {
+  outline: 2px solid rgba(212, 168, 67, 0.5);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+a, button { transition: all 0.15s ease; }
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .gradient-gold { background: linear-gradient(135deg, #D4A843, #B8860B); }
+  .glow-gold { box-shadow: 0 0 40px rgba(212, 168, 67, 0.25); }
+}

@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  name          String
+  avatarUrl     String?   @map("avatar_url")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  brands          Brand[]
+  campaigns       Campaign[]
+  payments        Payment[]
+  calendarEvents  CalendarEvent[]
+
+  @@map("users")
+}
+
+model Brand {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @map("user_id")
+  name          String
+  industry      String?
+  contactName   String?   @map("contact_name")
+  contactEmail  String?   @map("contact_email")
+  logoUrl       String?   @map("logo_url")
+  color         String    @default("#6366F1")
+  status        String    @default("Active")
+  score         Int       @default(0)
+  notes         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  user       User       @relation(fields: [userId], references: [id])
+  campaigns  Campaign[]
+  payments   Payment[]
+
+  @@map("brands")
+}
+
+model Campaign {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @map("user_id")
+  brandId       Int       @map("brand_id")
+  title         String
+  status        String    @default("Upcoming")
+  budget        Float     @default(0)
+  spent         Float     @default(0)
+  startDate     DateTime? @map("start_date")
+  endDate       DateTime? @map("end_date")
+  platformType  String?   @map("platform_type")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  user          User          @relation(fields: [userId], references: [id])
+  brand         Brand         @relation(fields: [brandId], references: [id])
+  deliverables  Deliverable[]
+  payments      Payment[]
+  calendarEvents CalendarEvent[]
+
+  @@map("campaigns")
+}
+
+model Deliverable {
+  id          Int       @id @default(autoincrement())
+  campaignId  Int       @map("campaign_id")
+  type        String
+  dueDate     DateTime? @map("due_date")
+  status      String    @default("Not Started")
+  payment     Float     @default(0)
+  notes       String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@map("deliverables")
+}
+
+model Payment {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @map("user_id")
+  campaignId  Int       @map("campaign_id")
+  brandId     Int       @map("brand_id")
+  amount      Float
+  paymentDate DateTime? @map("payment_date")
+  status      String    @default("Pending")
+  method      String?
+  invoiceUrl  String?   @map("invoice_url")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  user     User     @relation(fields: [userId], references: [id])
+  campaign Campaign @relation(fields: [campaignId], references: [id])
+  brand    Brand    @relation(fields: [brandId], references: [id])
+
+  @@map("payments")
+}
+
+model CalendarEvent {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @map("user_id")
+  campaignId  Int?      @map("campaign_id")
+  title       String
+  eventDate   DateTime  @map("event_date")
+  eventType   String    @default("deliverable") @map("event_type")
+  color       String    @default("#D4A843")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  user     User      @relation(fields: [userId], references: [id])
+  campaign Campaign? @relation(fields: [campaignId], references: [id])
+
+  @@map("calendar_events")
+}
