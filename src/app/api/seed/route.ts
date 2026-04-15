@@ -9,12 +9,13 @@ export async function POST() {
       where: { email: "demo@collabflow.io" },
     });
     if (existingUser) {
+      await prisma.user.update({ where: { email: "demo@collabflow.io" }, data: { name: "Kunal" } });
       return NextResponse.json({ message: "Database already seeded", seeded: true });
     }
 
     const passwordHash = await bcrypt.hash("demo123", 12);
     const user = await prisma.user.create({
-      data: { email: "demo@collabflow.io", passwordHash, name: "Rishabh" },
+      data: { email: "demo@collabflow.io", passwordHash, name: "Kunal" },
     });
 
     const brandsData = [

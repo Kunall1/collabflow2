@@ -14,7 +14,7 @@ async function main() {
     create: {
       email: "demo@collabflow.io",
       passwordHash,
-      name: "Rishabh",
+      name: "Kunal",
       avatarUrl: null,
     },
   });
