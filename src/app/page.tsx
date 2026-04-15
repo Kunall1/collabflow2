@@ -84,7 +84,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="relative border-t border-border py-8 text-center">
         <p className="text-xs text-txt-dim">
-          Built by <span className="text-txt-muted font-medium">Rishabh Bhargava</span> · Full-stack SaaS demo with real API integration
+          Built by <span className="text-txt-muted font-medium">Kunal Baheti</span> · Full-stack SaaS demo with real API integration
         </p>
       </footer>
     </div>
